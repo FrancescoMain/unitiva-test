@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import Header from "../../Components/Header/Header";
 import { Page } from "../../style";
 import { selectProduct } from "./store/Product.selector";
-import { Wrap } from "./style";
+import { ImgContainer, Wrap, Image } from "./style";
 
 export const ProductList = () => {
   const products = useSelector(selectProduct);
@@ -19,9 +19,9 @@ export const ProductList = () => {
             {/* map di tutti i prodotti */}
             {products.map((product) => (
               <div key={product.id}>
-                <div>
-                  <img src="" alt="" />
-                </div>
+                <ImgContainer>
+                  <Image src={product.Image} alt="" />
+                </ImgContainer>
                 <h3>{product.title}</h3>
                 <span>{product.code}</span>
                 <span>Qty:{product.Qty}</span>
