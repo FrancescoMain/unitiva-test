@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import Navbar from "../../Components/Navbar/Navbar";
+import Header from "../../Components/Header/Header";
 import { selectProduct } from "./store/Product.selector";
 
 export const ProductList = () => {
@@ -7,7 +7,10 @@ export const ProductList = () => {
 
   return (
     <>
-      <Navbar></Navbar>
+      <Header
+        title="LAST PRODUCT AVAILABLE"
+        info="5 product available"
+      ></Header>
       <div>
         <h1>Product List</h1>
         {/* map di tutti i prodotti */}
