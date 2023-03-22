@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import ProductList from "./Products/ProductList";
+import ProductList from "./pages/Products/ProductList";
 
 function App() {
   return (
