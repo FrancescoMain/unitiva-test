@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { Product } from "./type";
+
 // dati prodotti
 const initialProducts = [
   {
@@ -32,11 +35,13 @@ const initialProducts = [
 ];
 
 export const ProductList = () => {
+  const [products, setProducts] = useState<Product[]>(initialProducts);
+
   return (
     <div>
       <h1>Product List</h1>
       {/* map di tutti i prodotti */}
-      {initialProducts.map((product) => (
+      {products.map((product) => (
         <div key={product.id}>
           <span>{product.title + product.Price}</span>
         </div>
