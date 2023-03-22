@@ -7,6 +7,7 @@ const initialProducts = [
       code: "RB3210 2112A",
       Qty: 1,
       Price: 152,
+      Image: "https://images.ray-ban.com/is/image/RayBan/805289126577_0001.png?impolicy=SEO_4x3"
     },
     { id: 2, title: "Ray-Ban Round", code: "RB9210 1149", Qty: 1, Price: 166 },
     {
@@ -15,6 +16,8 @@ const initialProducts = [
       code: "RB3359 2112A",
       Qty: 3,
       Price: 152,
+      Image: "https://images.ray-ban.com/is/image/RayBan/805289126577_0001.png?impolicy=SEO_4x3"
+
     },
     {
       id: 4,
@@ -22,6 +25,8 @@ const initialProducts = [
       code: "RB3956 21122",
       Qty: 0,
       Price: 250.9,
+      Image: "https://images.ray-ban.com/is/image/RayBan/805289126577_0001.png?impolicy=SEO_4x3"
+
     },
     {
       id: 5,
@@ -29,6 +34,8 @@ const initialProducts = [
       code: "RB6211 2112A",
       Qty: 0,
       Price: 150.9,
+      Image: "https://images.ray-ban.com/is/image/RayBan/805289126577_0001.png?impolicy=SEO_4x3"
+
     },
   ];
 
