@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 export const Logo = styled.h1`
     text-align: center;
-    margin: 40px 0;
+    padding: 40px 0;
 
 `;
 
@@ -20,7 +20,7 @@ export const Line = styled.div `
 
 `;
 
-export const Title = styled.h3 `
+export const Title = styled.h2 `
     color: #555555;
 
 `;
