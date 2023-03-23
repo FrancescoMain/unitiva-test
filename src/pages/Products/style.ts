@@ -9,7 +9,7 @@ export const Wrap = styled.div`
 
 export const ImgContainer = styled.div`
     width:100%;
-    height: 100px;
+    height: 130px;
     overflow : hidden ;
     border-bottom: 1px solid #c5c5c5;
 
@@ -29,10 +29,11 @@ export const Box = styled.div`
 `;
 
 export const Card = styled.div`
-    width: calc(100% / 6);
+    width: calc(100% / 6) - 60px;
     margin: 10px;
     border: 1px solid #c5c5c5;
     border-radius: 5%;
+    background-color: white;
 
 `;
 
@@ -73,5 +74,10 @@ export const SelectSize = styled.select`
     font-size: 10px;
     width: 70px;
     height: 20px;
+    margin-top: 15px;
 `;
 
+export const Danger = styled.span `
+    color: red;
+
+`;
