@@ -1,11 +1,30 @@
 import Header from "../../Components/Header/Header";
-import { useAppSelector } from "../../store/store";
+// import { useAppSelector } from "../../redux/store";
 import { Page } from "../../style";
-import { ImgContainer, Wrap, Image } from "./style";
+import {
+  ImgContainer,
+  Wrap,
+  Image,
+  Box,
+  Card,
+  Title,
+  Info,
+  Code,
+  Qty,
+  Price,
+  SelectSize,
+  MyButton,
+} from "./style";
+import { Products } from "../../lib/Products";
+import {
+  Button,
+  FormControl,
+  MenuItem,
+  SelectChangeEvent,
+} from "@mui/material";
+import { useState } from "react";
 
 export const ProductList = () => {
-  const products = useAppSelector((state) => state.product);
-
   return (
     <>
       <Wrap>
@@ -14,20 +33,42 @@ export const ProductList = () => {
             title="LAST PRODUCT AVAILABLE"
             info="5 product available"
           ></Header>
-          <div>
+          <Box>
             {/* map di tutti i prodotti */}
-            {products.map((product) => (
-              <div key={product.id}>
+            {Products.map((product) => (
+              <Card key={product.id}>
                 <ImgContainer>
                   <Image src={product.image} alt="" />
                 </ImgContainer>
-                <h3>{product.title}</h3>
-                <span>{product.code}</span>
-                <span>Qty:{product.qty}</span>
-                <span>Price:{product.price}</span>
-              </div>
+                <Info>
+                  <Title>{product.title}</Title>
+                  <Code>{product.code}</Code>
+                  <Qty>Qty:{product.qty}</Qty>
+                  <Price>
+                    Price: €{" "}
+                    {product.price.toLocaleString("it-IT", {
+                      minimumFractionDigits: 2,
+                    })}
+                  </Price>
+                  <form action="">
+                    <SelectSize defaultValue={"DEFAULT"} name="" id="">
+                      <option value="DEFAULT" disabled>
+                        Select size
+                      </option>
+                      {product.sizes.map((size) => (
+                        <option key={size} value={size}>
+                          {size}
+                        </option>
+                      ))}
+                    </SelectSize>
+                    <MyButton type="submit" variant="contained">
+                      Add
+                    </MyButton>
+                  </form>
+                </Info>
+              </Card>
             ))}
-          </div>
+          </Box>
         </Page>
       </Wrap>
     </>
