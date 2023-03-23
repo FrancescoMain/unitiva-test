@@ -2,13 +2,18 @@ import styled from "styled-components";
 import { MyButton } from "../../style";
 import { Box } from "./style";
 
-const Footer = () => {
+interface Props {
+  productsCounter: string;
+  link: string;
+}
+
+const Footer = ({ productsCounter, link }: Props) => {
   return (
     <Box>
       <div>
-        <span>0 product Added</span>
+        <span>{productsCounter}</span>
       </div>
-      <MyButton size="large">Go To Cart</MyButton>{" "}
+      <MyButton size="large">{link}</MyButton>{" "}
     </Box>
   );
 };
