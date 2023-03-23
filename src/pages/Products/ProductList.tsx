@@ -12,6 +12,7 @@ import {
   Qty,
   Price,
   SelectSize,
+  Danger,
 } from "./style";
 import { Products } from "../../lib/Products";
 import Footer from "../../Components/Footer/Footer";
@@ -55,7 +56,19 @@ export const ProductList = () => {
                 <Info>
                   <Title>{product.title}</Title>
                   <Code>{product.code}</Code>
-                  <Qty>Qty:{product.qty}</Qty>
+                  <Qty>
+                    Qty:
+                    {product.qty === 1 ? (
+                      <Danger>{product.qty}</Danger>
+                    ) : (
+                      product.qty
+                    )}{" "}
+                    {product.qty < 4 ? (
+                      <Danger>Last pieces aviable</Danger>
+                    ) : (
+                      ""
+                    )}
+                  </Qty>
                   <Price>
                     Price: €{" "}
                     {product.price.toLocaleString("it-IT", {
@@ -92,10 +105,7 @@ export const ProductList = () => {
           </Box>
         </Page>
       </Wrap>
-      <Footer
-        productsCounter={`${cart.length} product added`}
-        link="Go To Cart"
-      ></Footer>
+      <Footer productsCounter={` product added`} link="Go To Cart"></Footer>
     </>
   );
 };
