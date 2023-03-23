@@ -1,5 +1,4 @@
 import Header from "../../Components/Header/Header";
-// import { useAppSelector } from "../../redux/store";
 import { MyButton, Page } from "../../style";
 import {
   ImgContainer,
@@ -15,16 +14,16 @@ import {
   SelectSize,
 } from "./style";
 import { Products } from "../../lib/Products";
-import {
-  Button,
-  FormControl,
-  MenuItem,
-  SelectChangeEvent,
-} from "@mui/material";
-import { useState } from "react";
 import Footer from "../../Components/Footer/Footer";
+import { useAppDispatch } from "../../redux/store";
+import { Product } from "../../lib/type";
+import { addToCart } from "../../redux/cart/cartSlice";
 
 export const ProductList = () => {
+  const dispatch = useAppDispatch();
+
+  const addToCartHandler = (product: Product) => dispatch(addToCart(product));
+
   return (
     <>
       <Wrap>
@@ -50,7 +49,7 @@ export const ProductList = () => {
                       minimumFractionDigits: 2,
                     })}
                   </Price>
-                  <form action="">
+                  <form>
                     <SelectSize defaultValue={"DEFAULT"} name="" id="">
                       <option value="DEFAULT" disabled>
                         Select size
@@ -61,7 +60,12 @@ export const ProductList = () => {
                         </option>
                       ))}
                     </SelectSize>
-                    <MyButton type="submit" variant="contained">
+                    <MyButton
+                      onClick={() => {
+                        addToCartHandler(product);
+                      }}
+                      variant="contained"
+                    >
                       Add
                     </MyButton>
                   </form>
@@ -71,7 +75,7 @@ export const ProductList = () => {
           </Box>
         </Page>
       </Wrap>
-      <Footer></Footer>
+      <Footer productsCounter="0 product Added" link="Go To Cart"></Footer>
     </>
   );
 };
