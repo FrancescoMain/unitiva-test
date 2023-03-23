@@ -10,7 +10,7 @@ export const Page = styled.div`
 `;
 
 export const MyButton = styled(Button)`
-    margin-left: 30px !important;
+    margin-left: 20px !important;
 
     height: ${({ size }) => size === 'large' ? '40px' : '25px'};
     min-width: ${({ size }) => size === 'large' ? '120px' : 'none' }!important;
