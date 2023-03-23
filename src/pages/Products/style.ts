@@ -1,4 +1,3 @@
-import { Button, MenuItem, Select } from '@mui/material';
 import styled from 'styled-components'
 
 export const Wrap = styled.div`
@@ -76,11 +75,3 @@ export const SelectSize = styled.select`
     height: 20px;
 `;
 
-export const MyButton = styled(Button)`
-    margin-left: 40px !important;
-    height: 25px;
-    font-size: 12px !important;
-    text-transform: none !important;
-    background-color: #5f729d !important;
-    min-width: none !important;
-`;
