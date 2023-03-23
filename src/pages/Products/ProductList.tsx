@@ -25,6 +25,7 @@ export const ProductList = () => {
   const cart = useAppSelector((state) => state.cart);
   const [currentProducts, setCurrentProducts] = useState(Products);
   const addToCartHandler = (product: Product) => {
+    //rimuove un elemento dai current product
     setCurrentProducts(
       currentProducts.map((currentProduct) =>
         currentProduct.id === product.id && currentProduct.qty > 0
@@ -32,6 +33,7 @@ export const ProductList = () => {
           : currentProduct
       )
     );
+    //aggiunge al carrello
     dispatch(addToCart(product));
   };
 
@@ -72,12 +74,16 @@ export const ProductList = () => {
                       ))}
                     </SelectSize>
                     <MyButton
+                      disabled={product.qty === 0 ? true : false}
                       onClick={() => {
-                        addToCartHandler(product);
+                        {
+                          addToCartHandler(product);
+                        }
                       }}
                       variant="contained"
+                      color={product.qty !== 0 ? "primary" : "secondary"}
                     >
-                      Add
+                      {product.qty === 0 ? "Added all" : "Add"}
                     </MyButton>
                   </form>
                 </Info>
