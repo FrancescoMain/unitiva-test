@@ -71,7 +71,7 @@ export const SelectSize = styled.select`
     border-radius: 4px;
     padding: 2px;
     font-size: 10px;
-    width: 90px;
+    width: 70px;
     height: 20px;
 `;
 

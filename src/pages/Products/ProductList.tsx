@@ -15,14 +15,25 @@ import {
 } from "./style";
 import { Products } from "../../lib/Products";
 import Footer from "../../Components/Footer/Footer";
-import { useAppDispatch } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { Product } from "../../lib/type";
 import { addToCart } from "../../redux/cart/cartSlice";
+import { useState } from "react";
 
 export const ProductList = () => {
   const dispatch = useAppDispatch();
-
-  const addToCartHandler = (product: Product) => dispatch(addToCart(product));
+  const cart = useAppSelector((state) => state.cart);
+  const [currentProducts, setCurrentProducts] = useState(Products);
+  const addToCartHandler = (product: Product) => {
+    setCurrentProducts(
+      currentProducts.map((currentProduct) =>
+        currentProduct.id === product.id && currentProduct.qty > 0
+          ? { ...currentProduct, qty: currentProduct.qty - 1 }
+          : currentProduct
+      )
+    );
+    dispatch(addToCart(product));
+  };
 
   return (
     <>
@@ -30,11 +41,11 @@ export const ProductList = () => {
         <Page>
           <Header
             title="LAST PRODUCT AVAILABLE"
-            info="5 product available"
+            info={`${currentProducts.length} product available`}
           ></Header>
           <Box>
             {/* map di tutti i prodotti */}
-            {Products.map((product) => (
+            {currentProducts.map((product) => (
               <Card key={product.id}>
                 <ImgContainer>
                   <Image src={product.image} alt="" />
@@ -75,7 +86,10 @@ export const ProductList = () => {
           </Box>
         </Page>
       </Wrap>
-      <Footer productsCounter="0 product Added" link="Go To Cart"></Footer>
+      <Footer
+        productsCounter={`${cart.length} product added`}
+        link="Go To Cart"
+      ></Footer>
     </>
   );
 };
