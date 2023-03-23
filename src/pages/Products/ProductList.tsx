@@ -1,6 +1,6 @@
 import Header from "../../Components/Header/Header";
 // import { useAppSelector } from "../../redux/store";
-import { Page } from "../../style";
+import { MyButton, Page } from "../../style";
 import {
   ImgContainer,
   Wrap,
@@ -13,7 +13,6 @@ import {
   Qty,
   Price,
   SelectSize,
-  MyButton,
 } from "./style";
 import { Products } from "../../lib/Products";
 import {
@@ -23,6 +22,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { useState } from "react";
+import Footer from "../../Components/Footer/Footer";
 
 export const ProductList = () => {
   return (
@@ -71,6 +71,7 @@ export const ProductList = () => {
           </Box>
         </Page>
       </Wrap>
+      <Footer></Footer>
     </>
   );
 };
