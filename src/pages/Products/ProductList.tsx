@@ -37,6 +37,7 @@ export const ProductList = () => {
     //aggiunge al carrello
     dispatch(addToCart(product));
   };
+  console.log(cart);
 
   return (
     <>
