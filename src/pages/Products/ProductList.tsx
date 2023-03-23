@@ -1,11 +1,10 @@
-import { useSelector } from "react-redux";
 import Header from "../../Components/Header/Header";
+import { useAppSelector } from "../../store/store";
 import { Page } from "../../style";
-import { selectProduct } from "./store/Product.selector";
 import { ImgContainer, Wrap, Image } from "./style";
 
 export const ProductList = () => {
-  const products = useSelector(selectProduct);
+  const products = useAppSelector((state) => state.product);
 
   return (
     <>
@@ -20,12 +19,12 @@ export const ProductList = () => {
             {products.map((product) => (
               <div key={product.id}>
                 <ImgContainer>
-                  <Image src={product.Image} alt="" />
+                  <Image src={product.image} alt="" />
                 </ImgContainer>
                 <h3>{product.title}</h3>
                 <span>{product.code}</span>
-                <span>Qty:{product.Qty}</span>
-                <span>Price:{product.Price}</span>
+                <span>Qty:{product.qty}</span>
+                <span>Price:{product.price}</span>
               </div>
             ))}
           </div>
