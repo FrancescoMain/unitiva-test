@@ -5,5 +5,6 @@ export interface Product{
     qty: number,
     price: number,
     image: string,
-    sizes: number[]
+    sizes: number[],
+    sizeSelected?: number,
 } 
