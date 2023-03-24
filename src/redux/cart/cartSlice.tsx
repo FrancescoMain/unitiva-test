@@ -15,8 +15,13 @@ export const CartSlice = createSlice({
       );
       if (productIndex !== -1) {
         state[productIndex].amount += 1;
+      } else {
+        state.push({
+          ...action.payload,
+          amount: 1,
+          sizeSelected: action.payload.sizeSelected,
+        });
       }
-      state.push({ ...action.payload, amount: 1 });
     },
   },
 });
