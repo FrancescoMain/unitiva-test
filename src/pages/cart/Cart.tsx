@@ -14,10 +14,18 @@ import Footer from "../../Components/Footer/Footer";
 import Header from "../../Components/Header/Header";
 import { Page } from "../../style";
 import { Wrap } from "../Products/style";
-import { useAppSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { useEffect, useState } from "react";
+import { Product } from "../../lib/type";
+import { addToCart, removeToCart } from "../../redux/cart/cartSlice";
 
 export const Cart = () => {
+  const dispatch = useAppDispatch();
+
+  const addToCartHandler = (product: Product) => {
+    dispatch(removeToCart(product));
+  };
+
   const cart = useAppSelector((state) => state.cart);
   const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
@@ -47,7 +55,18 @@ export const Cart = () => {
               <tbody>
                 {cart.map((product) => (
                   <TRow>
-                    <TD bordo={true}>{product.title}</TD>
+                    <TD bordo={true}>
+                      {product.title}{" "}
+                      <button
+                        onClick={() => {
+                          {
+                            addToCartHandler(product);
+                          }
+                        }}
+                      >
+                        Remove
+                      </button>
+                    </TD>
                     <TD>{product.code}</TD>
                     <TD>{product.sizeSelected}</TD>
                     <TD>{product.amount}</TD>

@@ -41,7 +41,11 @@ export const ProductList = () => {
   const addToCartHandler = (product: Product) => {
     const productWithSize = { ...product, sizeSelected: selectedSize };
     dispatch(addToCart(productWithSize));
-    dispatch(removeToProducts(product));
+    dispatch(removeToProducts(productWithSize));
+  };
+
+  const handleSetSize = (index: number, product: Product) => {
+    console.log("size");
   };
 
   //seleziona la taglia
@@ -91,13 +95,14 @@ export const ProductList = () => {
                       <option value="DEFAULT" disabled>
                         Select size
                       </option>
-                      {product.sizes.map((size) => (
+                      {product.sizes.map((size, index) => (
                         <option
-                          onClick={() => setSelectedSize(size)}
-                          key={size}
-                          value={size}
+                          onClick={() => handleSetSize(index, product)}
+                          key={index}
+                          value={size.size}
+                          disabled={size.qty === 0}
                         >
-                          {size}
+                          {size.size} ({size.qty} pz)
                         </option>
                       ))}
                     </SelectSize>

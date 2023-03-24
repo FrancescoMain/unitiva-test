@@ -13,17 +13,22 @@ export const CartSlice = createSlice({
       const productIndex = state.findIndex(
         (product) => product.id === action.payload.id
       );
+
+      state.push({
+        ...action.payload,
+        amount: 1,
+        sizeSelected: action.payload.sizeSelected,
+      });
+    },
+    removeToCart: (state, action: PayloadAction<Product>) => {
+      const productIndex = state.findIndex(
+        (product) => product.id === action.payload.id
+      );
       if (productIndex !== -1) {
-        state[productIndex].amount += 1;
-      } else {
-        state.push({
-          ...action.payload,
-          amount: 1,
-          sizeSelected: action.payload.sizeSelected,
-        });
+        state.splice(productIndex, 1);
       }
     },
   },
 });
 
-export const { addToCart } = CartSlice.actions;
+export const { addToCart, removeToCart } = CartSlice.actions;
