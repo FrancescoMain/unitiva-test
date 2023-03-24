@@ -10,13 +10,23 @@ import {
   Num,
   UnderLine,
 } from "./style";
-import React from "react";
 import Footer from "../../Components/Footer/Footer";
 import Header from "../../Components/Header/Header";
 import { Page } from "../../style";
 import { Wrap } from "../Products/style";
+import { useAppSelector } from "../../redux/store";
+import { useEffect, useState } from "react";
 
 export const Cart = () => {
+  const cart = useAppSelector((state) => state.cart);
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    const totalPrice = cart.reduce(
+      (acc, cur) => acc + cur.price * cur.amount,
+      0
+    );
+    setTotalPrice(totalPrice);
+  }, [cart]);
   return (
     <>
       <Wrap>
@@ -35,29 +45,47 @@ export const Cart = () => {
                 </TRow>
               </thead>
               <tbody>
-                <TRow>
-                  <TD bordo={true}>Rayban</TD>
-                  <TD>Rayban</TD>
-                  <TD>Rayban</TD>
-                  <TD>Rayban</TD>
-                  <TD>Rayban</TD>
-                </TRow>
+                {cart.map((product) => (
+                  <TRow>
+                    <TD bordo={true}>{product.title}</TD>
+                    <TD>{product.code}</TD>
+                    <TD>{product.sizeSelected}</TD>
+                    <TD>{product.amount}</TD>
+                    <TD>
+                      €{" "}
+                      {product.price.toLocaleString("it-IT", {
+                        minimumFractionDigits: 2,
+                      })}
+                    </TD>
+                  </TRow>
+                ))}
               </tbody>
             </Table>
             <ShopBox>
               <Tot>
-                Total pieces:<Num>7</Num>
+                Total pieces:<Num>{cart.length}</Num>
               </Tot>
               <UnderLine></UnderLine>
               <Tot>
-                Total Price:<Num>1200</Num>
+                Total Price:
+                <Num>
+                  €{" "}
+                  {totalPrice.toLocaleString("it-IT", {
+                    minimumFractionDigits: 2,
+                  })}
+                </Num>
               </Tot>
               <UnderLine></UnderLine>
             </ShopBox>
           </Box>
         </Page>
       </Wrap>
-      <Footer productsCounter={`product added`} link="Go To Cart"></Footer>
+      <Footer
+        productsCounter={`product added`}
+        text="checkout"
+        link="/checkout"
+        backShow
+      ></Footer>
     </>
   );
 };
