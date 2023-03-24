@@ -59,7 +59,7 @@ export const ShopBox = styled.div`
 `;
 
 export const Tot = styled.div`
-    width: 200px;
+    width: 250px;
     display: flex;
     justify-content: space-between;
     font-size: 20px;
@@ -69,13 +69,12 @@ export const Tot = styled.div`
 export const Num = styled.span`
     text-align: end;
     display: block;
-    width: 40px;
-    
+    width: 141px;    
 `;
 
 export const UnderLine = styled.div`
     border-bottom: 1px solid #5d5d5d;
-    width: 200px;
+    width: 250px;
     position: relative;
     bottom: 4px;
 
