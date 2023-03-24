@@ -19,37 +19,47 @@ import Footer from "../../Components/Footer/Footer";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { Product } from "../../lib/type";
 import { addToCart } from "../../redux/cart/cartSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  addToProducts,
+  removeToProducts,
+} from "../../redux/product/productSlice";
 
 export const ProductList = () => {
+  //dispatch generale
   const dispatch = useAppDispatch();
+  // richiama lo stato del cart
   const cart = useAppSelector((state) => state.cart);
-  const [currentProducts, setCurrentProducts] = useState(Products);
+  //inserisce i porodotti in redux
+  useEffect(() => {
+    dispatch(addToProducts(Products));
+  }, [Products, dispatch]);
+  //richiama lo stato dei prodotti
+  const products = useAppSelector((state) => state.product);
+
+  //aggiunge al carrello & rimuove dai prodotti
   const addToCartHandler = (product: Product) => {
-    //rimuove un elemento dai current product
-    setCurrentProducts(
-      currentProducts.map((currentProduct) =>
-        currentProduct.id === product.id && currentProduct.qty > 0
-          ? { ...currentProduct, qty: currentProduct.qty - 1 }
-          : currentProduct
-      )
-    );
-    //aggiunge al carrello
-    dispatch(addToCart(product));
+    const productWithSize = { ...product, sizeSelected: selectedSize };
+    dispatch(addToCart(productWithSize));
+    dispatch(removeToProducts(product));
   };
-  console.log(cart);
+
+  //seleziona la taglia
+  const [selectedSize, setSelectedSize] = useState<number>();
 
   return (
     <>
       <Wrap>
         <Page>
+          {/* HEADER */}
           <Header
             title="LAST PRODUCT AVAILABLE"
-            info={`${currentProducts.length} product available`}
-          ></Header>
+            info={`${products.length} product available`}
+          />
+
           <Box>
             {/* map di tutti i prodotti */}
-            {currentProducts.map((product) => (
+            {products.map((product) => (
               <Card key={product.id}>
                 <ImgContainer>
                   <Image src={product.image} alt="" />
@@ -77,12 +87,16 @@ export const ProductList = () => {
                     })}
                   </Price>
                   <form>
-                    <SelectSize defaultValue={"DEFAULT"} name="" id="">
+                    <SelectSize required defaultValue={"DEFAULT"} name="" id="">
                       <option value="DEFAULT" disabled>
                         Select size
                       </option>
                       {product.sizes.map((size) => (
-                        <option key={size} value={size}>
+                        <option
+                          onClick={() => setSelectedSize(size)}
+                          key={size}
+                          value={size}
+                        >
                           {size}
                         </option>
                       ))}
@@ -106,7 +120,11 @@ export const ProductList = () => {
           </Box>
         </Page>
       </Wrap>
-      <Footer productsCounter={` product added`} link="Go To Cart"></Footer>
+      <Footer
+        productsCounter={` product added`}
+        text="Go To Cart"
+        link="/cart"
+      ></Footer>
     </>
   );
 };
