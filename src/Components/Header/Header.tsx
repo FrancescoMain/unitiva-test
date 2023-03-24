@@ -10,11 +10,7 @@ const Navbar = ({ title, info }: Props) => {
       <Logo>STORE LOGO</Logo>
       <Box>
         <Title>{title}</Title>
-        <span>
-          {cart.length}
-
-          {info}
-        </span>
+        <span>{info}</span>
       </Box>
       <Line />
     </header>
