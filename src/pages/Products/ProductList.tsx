@@ -26,21 +26,19 @@ import {
   selectSize,
 } from "../../redux/product/productSlice";
 import { SizeProductPayload } from "../../redux/product/type";
-import { resetCheckout } from "../../redux/checkout/checkoutSlice";
 
 export const ProductList = () => {
   //dispatch generale
   const dispatch = useAppDispatch();
+
   // richiama lo stato del cart
   const cart = useAppSelector((state) => state.cart);
+
   //inserisce i porodotti in redux
   useEffect(() => {
     dispatch(addToProducts(Products));
   }, [Products, dispatch]);
 
-  useEffect(() => {
-    dispatch(resetCheckout());
-  }, [dispatch]);
   //richiama lo stato dei prodotti
   const products = useAppSelector((state) => state.product);
 
@@ -54,6 +52,7 @@ export const ProductList = () => {
     dispatch(removeToProducts(product));
   };
 
+  // inserisce nel prodotto una taglia selezionata
   const handleSetSize = (size: Sizes, product: Product) => {
     const sizeProduct: SizeProductPayload = {
       size: size,
@@ -101,6 +100,7 @@ export const ProductList = () => {
                       minimumFractionDigits: 2,
                     })}
                   </Price>
+                  {/* Selezione della taglia  */}
                   <form>
                     <SelectSize required defaultValue={"DEFAULT"} name="" id="">
                       <option value="DEFAULT" disabled>
@@ -136,6 +136,8 @@ export const ProductList = () => {
           </Box>
         </Page>
       </Wrap>
+
+      {/* Footer  */}
       <Footer
         productsCounter={` product added`}
         text="Go To Cart"

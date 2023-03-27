@@ -28,19 +28,28 @@ import {
 } from "../../redux/product/productSlice";
 
 export const Cart = () => {
+  //dispatch generale
   const dispatch = useAppDispatch();
 
+  //rimuove dal carrello e lo rimette nella lista prodotti
   const removeToCartHandler = (product: Product) => {
     dispatch(removeToCart(product));
     dispatch(incrementProduct(product));
   };
+
+  //aggiunge al carrello e rimuove dalla lista prodotti
   const addToCartHandler = (product: Product) => {
     dispatch(addToCart(product));
     dispatch(removeToProducts(product));
   };
 
+  //stato del carrello
   const cart = useAppSelector((state) => state.cart);
+
+  // hook di gestione prezzo totale
   const [totalPrice, setTotalPrice] = useState(0);
+
+  //total price
   useEffect(() => {
     const totalPrice = cart.reduce(
       (acc, cur) => acc + cur.price * cur.amount,
@@ -48,11 +57,12 @@ export const Cart = () => {
     );
     setTotalPrice(totalPrice);
   }, [cart]);
+
   return (
     <>
       <Wrap>
         <Page>
-          <Header title="CART" info={` product added`}></Header>
+          <Header title="CART" info={`${cart.length} product added`}></Header>
           <Box>
             <h2>Your Cart Contains:</h2>
             <Table>
