@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Product } from "../../lib/type";
+import { Product, Sizes } from "../../lib/type";
+import { SizeProductPayload } from "./type";
 
 export const ProductSlice = createSlice({
   name: "product",
@@ -17,9 +18,27 @@ export const ProductSlice = createSlice({
       const product = state.find((p) => p.id === action.payload.id);
       if (product) {
         product.qty--;
+        if (product.sizeSelected) {
+          product.sizeSelected.qty = product.sizeSelected.qty - 1;
+          const size = product.sizes.find(
+            (s) => s.size === product.sizeSelected?.size
+          );
+          if (size) {
+            size.qty--;
+          }
+        }
+      }
+    },
+    selectSize: (state, action: PayloadAction<SizeProductPayload>) => {
+      const productToUpdate = state.find(
+        (p) => p.id === action.payload.product.id
+      );
+      if (productToUpdate) {
+        productToUpdate.sizeSelected = action.payload.size;
       }
     },
   },
 });
 
-export const { addToProducts, removeToProducts } = ProductSlice.actions;
+export const { addToProducts, removeToProducts, selectSize } =
+  ProductSlice.actions;
