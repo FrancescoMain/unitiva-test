@@ -37,8 +37,14 @@ export const ProductSlice = createSlice({
         productToUpdate.sizeSelected = action.payload.size;
       }
     },
+    incrementProduct: (state, action: PayloadAction<Product>) => {
+      const product = state.find((p) => p.id === action.payload.id);
+      if (product) {
+        product.qty += 1;
+      }
+    },
   },
 });
 
-export const { addToProducts, removeToProducts, selectSize } =
+export const { addToProducts, removeToProducts, selectSize, incrementProduct } =
   ProductSlice.actions;

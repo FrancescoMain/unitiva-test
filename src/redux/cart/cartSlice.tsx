@@ -10,22 +10,29 @@ export const CartSlice = createSlice({
   initialState: [] as CartProduct[],
   reducers: {
     addToCart: (state, action: PayloadAction<Product>) => {
-      const productIndex = state.findIndex(
-        (product) => product.id === action.payload.id
+      const product = state.find(
+        (p) =>
+          p.id === action.payload.id &&
+          p.sizeSelected?.size === action.payload.sizeSelected?.size
       );
 
-      state.push({
-        ...action.payload,
-        amount: 1,
-        sizeSelected: action.payload.sizeSelected,
-      });
+      if (product) {
+        product.amount += 1;
+      } else {
+        state.push({
+          ...action.payload,
+          amount: 1,
+        });
+      }
     },
     removeToCart: (state, action: PayloadAction<Product>) => {
-      const productIndex = state.findIndex(
-        (product) => product.id === action.payload.id
-      );
-      if (productIndex !== -1) {
-        state.splice(productIndex, 1);
+      const product = state.find((p) => p.id === action.payload.id);
+      const productIndex = state.findIndex((p) => p.id === action.payload.id);
+      if (product) {
+        product.amount -= 1;
+        if (product.amount === 0) {
+          state.splice(productIndex, 1);
+        }
       }
     },
   },

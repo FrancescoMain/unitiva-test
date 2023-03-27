@@ -18,12 +18,14 @@ import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { useEffect, useState } from "react";
 import { Product } from "../../lib/type";
 import { addToCart, removeToCart } from "../../redux/cart/cartSlice";
+import { incrementProduct } from "../../redux/product/productSlice";
 
 export const Cart = () => {
   const dispatch = useAppDispatch();
 
   const addToCartHandler = (product: Product) => {
     dispatch(removeToCart(product));
+    dispatch(incrementProduct(product));
   };
 
   const cart = useAppSelector((state) => state.cart);
