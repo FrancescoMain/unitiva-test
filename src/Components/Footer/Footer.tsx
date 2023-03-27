@@ -3,7 +3,7 @@ import { MyButton } from "../../style";
 import { Box, Wrap, Back } from "./style";
 import { useNavigate } from "react-router-dom";
 interface Props {
-  productsCounter: string;
+  productsCounter?: string;
   link: string;
   text: string;
   backShow?: boolean;
@@ -11,6 +11,7 @@ interface Props {
 
 const Footer = ({ productsCounter, link, text, backShow }: Props) => {
   const cart = useAppSelector((state) => state.cart);
+  const checkout = useAppSelector((state) => state.checkout.counter);
   const navigate = useNavigate();
 
   return (
@@ -29,13 +30,15 @@ const Footer = ({ productsCounter, link, text, backShow }: Props) => {
 
       <Wrap>
         <div>
-          <span>
-            {cart.length} {productsCounter}
-          </span>
+          {productsCounter && (
+            <span>
+              {cart.length} {productsCounter}
+            </span>
+          )}
         </div>
         <MyButton
-          color={cart.length === 0 ? "secondary" : "primary"}
-          disabled={cart.length === 0 ? true : false}
+          color={cart.length !== 0 || checkout !== 0 ? "primary" : "secondary"}
+          disabled={cart.length !== 0 || checkout !== 0 ? false : true}
           size="large"
           onClick={() => {
             navigate(link);
