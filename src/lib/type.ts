@@ -5,11 +5,11 @@ export interface Product{
     price: number,
     image: string,
     sizes: Sizes[],
-    sizeSelected?: number,
+    sizeSelected?: Sizes,
     qty:number
 } 
 
-interface Sizes {
+export interface Sizes {
     size: number,
     qty: number,
 }
