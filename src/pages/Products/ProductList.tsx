@@ -26,6 +26,7 @@ import {
   selectSize,
 } from "../../redux/product/productSlice";
 import { SizeProductPayload } from "../../redux/product/type";
+import { resetCheckout } from "../../redux/checkout/checkoutSlice";
 
 export const ProductList = () => {
   //dispatch generale
@@ -36,6 +37,10 @@ export const ProductList = () => {
   useEffect(() => {
     dispatch(addToProducts(Products));
   }, [Products, dispatch]);
+
+  useEffect(() => {
+    dispatch(resetCheckout());
+  }, [dispatch]);
   //richiama lo stato dei prodotti
   const products = useAppSelector((state) => state.product);
 
