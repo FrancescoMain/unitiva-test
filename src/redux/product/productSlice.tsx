@@ -41,6 +41,12 @@ export const ProductSlice = createSlice({
       const product = state.find((p) => p.id === action.payload.id);
       if (product) {
         product.qty += 1;
+        const size = product?.sizes.find(
+          (s) => s.size === product.sizeSelected?.size
+        );
+        if (size) {
+          size.qty += 1;
+        }
       }
     },
   },

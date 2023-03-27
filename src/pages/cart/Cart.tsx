@@ -24,6 +24,8 @@ export const Cart = () => {
   const dispatch = useAppDispatch();
 
   const addToCartHandler = (product: Product) => {
+    console.log(product);
+
     dispatch(removeToCart(product));
     dispatch(incrementProduct(product));
   };
