@@ -1,4 +1,4 @@
 export interface Props {
-    title: string;
-    info: string;
+    title?: string;
+    info?: string;
   }
