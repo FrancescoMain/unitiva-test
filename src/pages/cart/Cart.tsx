@@ -9,6 +9,10 @@ import {
   Tot,
   Num,
   UnderLine,
+  RemoveButton,
+  Del,
+  AddButton,
+  Add,
 } from "./style";
 import Footer from "../../Components/Footer/Footer";
 import Header from "../../Components/Header/Header";
@@ -18,16 +22,21 @@ import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { useEffect, useState } from "react";
 import { Product } from "../../lib/type";
 import { addToCart, removeToCart } from "../../redux/cart/cartSlice";
-import { incrementProduct } from "../../redux/product/productSlice";
+import {
+  incrementProduct,
+  removeToProducts,
+} from "../../redux/product/productSlice";
 
 export const Cart = () => {
   const dispatch = useAppDispatch();
 
-  const addToCartHandler = (product: Product) => {
-    console.log(product);
-
+  const removeToCartHandler = (product: Product) => {
     dispatch(removeToCart(product));
     dispatch(incrementProduct(product));
+  };
+  const addToCartHandler = (product: Product) => {
+    dispatch(addToCart(product));
+    dispatch(removeToProducts(product));
   };
 
   const cart = useAppSelector((state) => state.cart);
@@ -61,19 +70,32 @@ export const Cart = () => {
                   <TRow>
                     <TD bordo={true}>
                       {product.title}{" "}
-                      <button
+                      <RemoveButton
                         onClick={() => {
                           {
-                            addToCartHandler(product);
+                            removeToCartHandler(product);
                           }
                         }}
                       >
                         Remove
-                      </button>
+                      </RemoveButton>
                     </TD>
                     <TD>{product.code}</TD>
                     <TD>{product.sizeSelected?.size}</TD>
-                    <TD>{product.amount}</TD>
+                    <TD>
+                      {product.amount}
+                      {product?.sizeSelected?.qty! > product.amount && (
+                        <AddButton
+                          onClick={() => {
+                            {
+                              addToCartHandler(product);
+                            }
+                          }}
+                        >
+                          Add
+                        </AddButton>
+                      )}
+                    </TD>
                     <TD>
                       €{" "}
                       {product.price.toLocaleString("it-IT", {
