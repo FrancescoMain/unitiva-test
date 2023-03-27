@@ -49,8 +49,14 @@ export const ProductSlice = createSlice({
         }
       }
     },
+    resetProduct: () => [],
   },
 });
 
-export const { addToProducts, removeToProducts, selectSize, incrementProduct } =
-  ProductSlice.actions;
+export const {
+  addToProducts,
+  removeToProducts,
+  selectSize,
+  incrementProduct,
+  resetProduct,
+} = ProductSlice.actions;
