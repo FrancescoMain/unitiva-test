@@ -68,7 +68,7 @@ export const Cart = () => {
                       </button>
                     </TD>
                     <TD>{product.code}</TD>
-                    <TD>{product.sizeSelected}</TD>
+                    <TD>{product.sizeSelected?.size}</TD>
                     <TD>{product.amount}</TD>
                     <TD>
                       €{" "}
