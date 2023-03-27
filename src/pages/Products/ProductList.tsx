@@ -17,13 +17,15 @@ import {
 import { Products } from "../../lib/Products";
 import Footer from "../../Components/Footer/Footer";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
-import { Product } from "../../lib/type";
+import { Product, Sizes } from "../../lib/type";
 import { addToCart } from "../../redux/cart/cartSlice";
 import { useEffect, useState } from "react";
 import {
   addToProducts,
   removeToProducts,
+  selectSize,
 } from "../../redux/product/productSlice";
+import { SizeProductPayload } from "../../redux/product/type";
 
 export const ProductList = () => {
   //dispatch generale
@@ -39,17 +41,21 @@ export const ProductList = () => {
 
   //aggiunge al carrello & rimuove dai prodotti
   const addToCartHandler = (product: Product) => {
-    const productWithSize = { ...product, sizeSelected: selectedSize };
-    dispatch(addToCart(productWithSize));
-    dispatch(removeToProducts(productWithSize));
+    if (product.sizeSelected?.qty === 0 || !product.sizeSelected) {
+      alert("Errore: seleziona una taglia disponibile");
+      return;
+    }
+    dispatch(addToCart(product));
+    dispatch(removeToProducts(product));
   };
 
-  const handleSetSize = (index: number, product: Product) => {
-    console.log("size");
+  const handleSetSize = (size: Sizes, product: Product) => {
+    const sizeProduct: SizeProductPayload = {
+      size: size,
+      product: product,
+    };
+    dispatch(selectSize(sizeProduct));
   };
-
-  //seleziona la taglia
-  const [selectedSize, setSelectedSize] = useState<number>();
 
   return (
     <>
@@ -97,7 +103,7 @@ export const ProductList = () => {
                       </option>
                       {product.sizes.map((size, index) => (
                         <option
-                          onClick={() => handleSetSize(index, product)}
+                          onClick={() => handleSetSize(size, product)}
                           key={index}
                           value={size.size}
                           disabled={size.qty === 0}
