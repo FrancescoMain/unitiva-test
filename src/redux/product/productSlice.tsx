@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Product, Sizes } from "../../lib/type";
-import { SizeProductPayload } from "./type";
+import { Product } from "../../lib/type";
+import { SizeProductPayload, SizeObjProductPayload } from "./type";
 
 export const ProductSlice = createSlice({
   name: "product",
@@ -33,16 +33,20 @@ export const ProductSlice = createSlice({
       const productToUpdate = state.find(
         (p) => p.id === action.payload.product.id
       );
+      const sizeInt = parseInt(action.payload.size);
+      const sizeObj = action.payload.product.sizes.find(
+        (s) => s.size === sizeInt
+      );
       if (productToUpdate) {
-        productToUpdate.sizeSelected = action.payload.size;
+        productToUpdate.sizeSelected = sizeObj;
       }
     },
-    incrementProduct: (state, action: PayloadAction<Product>) => {
-      const product = state.find((p) => p.id === action.payload.id);
+    incrementProduct: (state, action: PayloadAction<SizeObjProductPayload>) => {
+      const product = state.find((p) => p.id === action.payload.product.id);
       if (product) {
         product.qty += 1;
         const size = product?.sizes.find(
-          (s) => s.size === product.sizeSelected?.size
+          (s) => s.size === action.payload.size.size
         );
         if (size) {
           size.qty += 1;

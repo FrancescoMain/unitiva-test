@@ -17,9 +17,9 @@ import {
 import { Products } from "../../lib/Products";
 import Footer from "../../Components/Footer/Footer";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
-import { Product, Sizes } from "../../lib/type";
+import { Product } from "../../lib/type";
 import { addToCart } from "../../redux/cart/cartSlice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   addToProducts,
   removeToProducts,
@@ -30,9 +30,6 @@ import { SizeProductPayload } from "../../redux/product/type";
 export const ProductList = () => {
   //dispatch generale
   const dispatch = useAppDispatch();
-
-  // richiama lo stato del cart
-  const cart = useAppSelector((state) => state.cart);
 
   //inserisce i porodotti in redux
   useEffect(() => {
@@ -53,7 +50,7 @@ export const ProductList = () => {
   };
 
   // inserisce nel prodotto una taglia selezionata
-  const handleSetSize = (size: Sizes, product: Product) => {
+  const handleSetSize = (size: string, product: Product) => {
     const sizeProduct: SizeProductPayload = {
       size: size,
       product: product,
@@ -102,13 +99,18 @@ export const ProductList = () => {
                   </Price>
                   {/* Selezione della taglia  */}
                   <form>
-                    <SelectSize required defaultValue={"DEFAULT"} name="" id="">
+                    <SelectSize
+                      required
+                      defaultValue={"DEFAULT"}
+                      name=""
+                      id=""
+                      onChange={(e) => handleSetSize(e.target.value, product)}
+                    >
                       <option value="DEFAULT" disabled>
                         Select size
                       </option>
                       {product.sizes.map((size, index) => (
                         <option
-                          onClick={() => handleSetSize(size, product)}
                           key={index}
                           value={size.size}
                           disabled={size.qty === 0}
@@ -120,9 +122,7 @@ export const ProductList = () => {
                     <MyButton
                       disabled={product.qty === 0 ? true : false}
                       onClick={() => {
-                        {
-                          addToCartHandler(product);
-                        }
+                        addToCartHandler(product);
                       }}
                       variant="contained"
                       color={product.qty !== 0 ? "primary" : "secondary"}

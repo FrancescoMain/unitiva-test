@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Product } from "../../lib/type";
 import { CartProduct } from "../cart/cartSlice";
 
 const Checkout = {
@@ -11,9 +10,7 @@ export const CheckoutSlice = createSlice({
   initialState: Checkout,
   reducers: {
     addToCheckout: (state, action: PayloadAction<CartProduct[]>) => {
-      action.payload.map((p) => {
-        state.counter += p.amount;
-      });
+      action.payload.map((p) => (state.counter += p.amount));
     },
     resetCheckout: () => Checkout,
   },

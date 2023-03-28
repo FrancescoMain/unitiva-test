@@ -10,9 +10,7 @@ import {
   Num,
   UnderLine,
   RemoveButton,
-  Del,
   AddButton,
-  Add,
 } from "./style";
 import Footer from "../../Components/Footer/Footer";
 import Header from "../../Components/Header/Header";
@@ -33,8 +31,12 @@ export const Cart = () => {
 
   //rimuove dal carrello e lo rimette nella lista prodotti
   const removeToCartHandler = (product: Product) => {
+    const productSize = {
+      size: product.sizeSelected || { size: 0, qty: 0 },
+      product: product,
+    };
     dispatch(removeToCart(product));
-    dispatch(incrementProduct(product));
+    dispatch(incrementProduct(productSize));
   };
 
   //aggiunge al carrello e rimuove dalla lista prodotti
@@ -76,15 +78,13 @@ export const Cart = () => {
                 </TRow>
               </thead>
               <tbody>
-                {cart.map((product) => (
-                  <TRow>
+                {cart.map((product, index) => (
+                  <TRow key={index}>
                     <TD bordo={true}>
                       {product.title}{" "}
                       <RemoveButton
                         onClick={() => {
-                          {
-                            removeToCartHandler(product);
-                          }
+                          removeToCartHandler(product);
                         }}
                       >
                         Remove
@@ -97,9 +97,7 @@ export const Cart = () => {
                       {product?.sizeSelected?.qty! > product.amount && (
                         <AddButton
                           onClick={() => {
-                            {
-                              addToCartHandler(product);
-                            }
+                            addToCartHandler(product);
                           }}
                         >
                           Add
