@@ -53,6 +53,18 @@ export const ProductSlice = createSlice({
         }
       }
     },
+    decrementProduct: (state, action: PayloadAction<SizeObjProductPayload>) => {
+      const product = state.find((p) => p.id === action.payload.product.id);
+      if (product) {
+        product.qty -= 1;
+        const size = product?.sizes.find(
+          (s) => s.size === action.payload.size.size
+        );
+        if (size) {
+          size.qty -= 1;
+        }
+      }
+    },
     resetProduct: () => [],
   },
 });
@@ -63,4 +75,5 @@ export const {
   selectSize,
   incrementProduct,
   resetProduct,
+  decrementProduct,
 } = ProductSlice.actions;
