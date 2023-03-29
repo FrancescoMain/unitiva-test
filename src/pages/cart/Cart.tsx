@@ -19,10 +19,14 @@ import { Wrap } from "../Products/style";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { useEffect, useState } from "react";
 import { Product } from "../../lib/type";
-import { addToCart, removeToCart } from "../../redux/cart/cartSlice";
 import {
+  addToCart,
+  CartProduct,
+  removeToCart,
+} from "../../redux/cart/cartSlice";
+import {
+  decrementProduct,
   incrementProduct,
-  removeToProducts,
 } from "../../redux/product/productSlice";
 
 export const Cart = () => {
@@ -30,19 +34,24 @@ export const Cart = () => {
   const dispatch = useAppDispatch();
 
   //rimuove dal carrello e lo rimette nella lista prodotti
-  const removeToCartHandler = (product: Product) => {
+  const removeToCartHandler = (product: CartProduct, index: number) => {
     const productSize = {
       size: product.sizeSelected || { size: 0, qty: 0 },
       product: product,
     };
-    dispatch(removeToCart(product));
+    const productIndex = { ...product, index: index };
+    dispatch(removeToCart(productIndex));
     dispatch(incrementProduct(productSize));
   };
 
   //aggiunge al carrello e rimuove dalla lista prodotti
   const addToCartHandler = (product: Product) => {
+    const productSize = {
+      size: product.sizeSelected || { size: 0, qty: 0 },
+      product: product,
+    };
     dispatch(addToCart(product));
-    dispatch(removeToProducts(product));
+    dispatch(decrementProduct(productSize));
   };
 
   //stato del carrello
@@ -84,7 +93,7 @@ export const Cart = () => {
                       {product.title}{" "}
                       <RemoveButton
                         onClick={() => {
-                          removeToCartHandler(product);
+                          removeToCartHandler(product, index);
                         }}
                       >
                         Remove
