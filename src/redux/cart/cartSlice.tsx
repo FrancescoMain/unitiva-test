@@ -3,6 +3,7 @@ import { Product } from "../../lib/type";
 
 export interface CartProduct extends Product {
   amount: number;
+  index?: number;
 }
 
 export const CartSlice = createSlice({
@@ -26,8 +27,16 @@ export const CartSlice = createSlice({
       }
     },
     removeToCart: (state, action: PayloadAction<Product>) => {
-      const product = state.find((p) => p.id === action.payload.id);
-      const productIndex = state.findIndex((p) => p.id === action.payload.id);
+      const product = state.find(
+        (p) =>
+          p.sizeSelected?.size === action.payload.sizeSelected?.size &&
+          action.payload.id === p.id
+      );
+      const productIndex = state.findIndex(
+        (p) =>
+          p.sizeSelected?.size === action.payload.sizeSelected?.size &&
+          action.payload.id === p.id
+      );
       if (product) {
         product.amount -= 1;
         if (product.amount === 0) {
